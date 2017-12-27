@@ -71,11 +71,13 @@ public class CirclePercentView extends View {
     private OnClickListener mOnClickListener;
 
     public CirclePercentView(Context context) {
-        super(context, null);
+        this(context, null);
+
     }
 
     public CirclePercentView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs, 0);
+        this(context, attrs, 0);
+
     }
 
     public CirclePercentView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -102,6 +104,12 @@ public class CirclePercentView extends View {
         typedArray.recycle(); //回收
 
 
+        init();
+
+
+    }
+
+    private void init() {
         /**
          * 画圆
          */
@@ -144,7 +152,6 @@ public class CirclePercentView extends View {
                 }
             }
         });
-
     }
 
 
@@ -177,6 +184,7 @@ public class CirclePercentView extends View {
         //画圆
         canvas.drawCircle(getWidth() / 2, getHeight() / 2, mRadius, mCirclePaint);
         //画圆弧
+
         mArcRectF.set(getWidth() / 2 - mRadius + mArcWidth / 2, getHeight() / 2 - mRadius + mArcWidth / 2,
                 getRight() / 2 + mRadius - mArcWidth / 2, getHeight() / 2 + mRadius - mArcWidth / 2);
         canvas.drawArc(mArcRectF, 270, 360 * mCurPercent / 100, false, mArcPaint);
@@ -194,22 +202,25 @@ public class CirclePercentView extends View {
      */
 
     public void setCurPercent(float curPercent) {
-        final ValueAnimator animator = ValueAnimator.ofFloat(mCurPercent, curPercent);
+         ValueAnimator animator = ValueAnimator.ofFloat(mCurPercent, curPercent);
         //动画时长由百分比大小决定
         animator.setDuration((long) (Math.abs(mCurPercent - curPercent) * 20));
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                float value = valueAnimator.getAnimatedFraction();
+                float value = (float) valueAnimator.getAnimatedValue();
                 //四舍五入保留到小数点后两位
+
                 mCurPercent = (float) (Math.round(value * 10)) / 10;
-                //重绘，冲走 onDraw() 方法，这也是不能在 onDraw() 中创建对象的原因
+                //重绘，重走 onDraw() 方法，这也是不能在 onDraw() 中创建对象的原因
                 invalidate();
             }
         });
         //开启动画
         animator.start();
     }
+
+
 
     public void setOnCircleClickListener(OnClickListener onClickListener) {
         this.mOnClickListener = onClickListener;
