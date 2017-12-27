@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.wzh.circlepercentview.MainActivity">
+
+
+    <com.wzh.circlepercentview.CirclePercentView
+        android:id="@+id/circlePercentView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:arcColor="#ffee00"
+        app:arcWidth="16dp"
+        app:circleBg="#8e29fa"
+        app:percentTextColor="#ffee00"
+        app:percentTextSize="16sp"
+        app:radius="100dp" />
+</LinearLayout>
